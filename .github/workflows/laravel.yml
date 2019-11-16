@@ -7,15 +7,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
-    - name: Go to Laravel root
-      run: pwd && ls && cd src/
     - name: Copy .env
+      working-directory: src
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
     - name: Install Dependencies
+      working-directory: src
       run: composer install
     - name: Generate key
+      working-directory: src
       run: php artisan key:generate
     - name: Create Database
+      working-directory: src
       run: |
         mkdir -p database
         touch database/database.sqlite
@@ -23,4 +25,4 @@ jobs:
       env:
         DB_CONNECTION: sqlite
         DB_DATABASE: database/database.sqlite
-      run: vendor/bin/phpunit
+      run: src/vendor/bin/phpunit
