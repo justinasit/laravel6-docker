@@ -22,6 +22,8 @@ phases:
     - cp .env.example .env
     - echo generating app key
     - php artisan key:generate
+    - echo running phpunit tests
+    - vendor/bin/phpunit
     - cd ..
     - echo Building the Docker image...
     - docker build -t $REPOSITORY_URI:latest .
